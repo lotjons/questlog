@@ -1,4 +1,6 @@
-export type GameStatus = 'want' | 'playing' | 'completed' | 'dropped' | 'all'
+export type GameStatus = 'want' | 'playing' | 'completed' | 'dropped'
+
+export type StatusFilter = GameStatus | 'all'
 
 export type Game = {
   id: string
