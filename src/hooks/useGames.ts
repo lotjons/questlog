@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { API_URL } from '../config'
-import type { Game, StatusFilter } from '../types'
+import type { Game, NewGame, StatusFilter } from '../types'
 
 // All games, or only one status
 export const useGames = (status: StatusFilter) => {
@@ -44,6 +44,38 @@ export const useGames = (status: StatusFilter) => {
   }, [status])
 
   return { games, isLoading, error }
+}
+
+// Create, update and delete games
+export const useSaveGame = () => {
+  const [isSaving, setIsSaving] = useState(false)
+  const [error, setError] = useState('')
+
+  const addGame = async (newGame: NewGame): Promise<Game | null> => {
+    setIsSaving(true)
+    setError('')
+    try {
+      const response = await fetch(`${API_URL}/games`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newGame),
+      })
+      const data = await response.json()
+
+      if (!response.ok) {
+        setError(data.message ?? 'Could not save the game.')
+        return null
+      }
+      return data
+    } catch {
+      setError('Could not reach the server. Check your connection.')
+      return null
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  return { addGame, isSaving, error }
 }
 
 // One game by id
