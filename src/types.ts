@@ -5,9 +5,11 @@ export type Game = {
   title: string
   platform: string
   status: GameStatus
-  rating?: number
+  rating: number | null
   coverUrl?: string
   notes?: string
+  createdAt: string
+  updatedAt: string
 }
 
 export const STATUS_LABELS: Record<GameStatus, string> = {
