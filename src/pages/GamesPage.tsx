@@ -1,12 +1,18 @@
+import { useState } from 'react'
+import FilterButtons from '../components/FilterButtons'
 import GameList from '../components/GameList'
 import { useGames } from '../hooks/useGames'
+import type { StatusFilter } from '../types'
 
 const GamesPage = () => {
-  const { games, isLoading, error } = useGames('all')
+  const [status, setStatus] = useState<StatusFilter>('all')
+  const { games, isLoading, error } = useGames(status)
 
   return (
     <>
       <h1 className="mb-4 text-3xl font-bold">My games</h1>
+
+      <FilterButtons selected={status} onChange={setStatus} />
 
       {isLoading && <p role="status">Loading games...</p>}
       {error && <p role="alert">{error}</p>}
