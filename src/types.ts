@@ -8,8 +8,8 @@ export type Game = {
   platform: string
   status: GameStatus
   rating: number | null
-  coverUrl?: string
-  notes?: string
+  coverUrl: string
+  notes: string
   createdAt: string
   updatedAt: string
 }
