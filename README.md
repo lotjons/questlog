@@ -1,75 +1,56 @@
-# React + TypeScript + Vite
+# Questlog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Questlog is my game backlog app. It keeps track of the games I want to play, the ones I'm playing right now, the ones I've finished and the ones I gave up on.
 
-Currently, two official plugins are available:
+I built it for Assignment 2 in the JavaScript frameworks course, to practise React Router, working with a REST API and writing my own custom hooks.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Live site:** https://lottie-questlog.vercel.app/
+**Grade I'm aiming for:** VG
+**My handle:** `lottie` (my games are saved here: https://questlog-api.vercel.app/api/lottie/games)
 
-## React Compiler
+## What you can do
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [ ] See all my games and filter them by status (All, Want to play, Playing, Completed, Dropped)
+- [ ] Open a game to see its cover, platform, rating and notes
+- [ ] Add a new game
+- [ ] Edit a game, for example change the status or rating
+- [ ] Delete a game
+- [ ] See a loading message while data is loading, and an error message if something goes wrong
+- [ ] Get a 404 page if the page or game doesn't exist
+- [ ] Keep the selected filter after reloading the page
 
-## Expanding the ESLint configuration
+## Built with
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React and TypeScript (with Vite)
+- React Router
+- Tailwind CSS
+- Biome for linting and formatting
+- Vercel for hosting
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## How to run it
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. Clone the repo and install the packages:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+   ```bash
+   git clone https://github.com/lotjons/questlog.git
+   cd questlog
+   npm install
+   ```
 
-```
+2. Start the dev server:
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+   ```bash
+   npm run dev
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+3. Open http://localhost:5173 in your browser.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+I also use `npm run check` to check the code with Biome before I commit, and `npm run format` to fix the formatting.
 
-```
+## My custom hooks
+
+_I'll write this when the hooks are done: how `useGames`, `useGame`, `useSaveGame` and `useLocalStorage` work, and why I put the fetch logic in hooks._
+
+## Reflection
+
+_Coming
