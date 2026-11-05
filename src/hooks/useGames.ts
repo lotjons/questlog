@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { API_URL } from '../config'
 import type { Game, StatusFilter } from '../types'
 
+// All games, or only one status
 export const useGames = (status: StatusFilter) => {
   const [games, setGames] = useState<Game[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -43,4 +44,45 @@ export const useGames = (status: StatusFilter) => {
   }, [status])
 
   return { games, isLoading, error }
+}
+
+// One game by id
+export const useGame = (id: string | undefined) => {
+  const [game, setGame] = useState<Game | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    if (!id) return
+    let ignore = false
+
+    const fetchGame = async () => {
+      setIsLoading(true)
+      setError('')
+      try {
+        const response = await fetch(`${API_URL}/games/${id}`)
+        const data = await response.json()
+
+        if (ignore) return
+        if (!response.ok) {
+          setError(data.message ?? 'Could not find that game.')
+          return
+        }
+        setGame(data)
+      } catch {
+        if (!ignore)
+          setError('Could not reach the server. Check your connection.')
+      } finally {
+        if (!ignore) setIsLoading(false)
+      }
+    }
+
+    fetchGame()
+
+    return () => {
+      ignore = true
+    }
+  }, [id])
+
+  return { game, isLoading, error }
 }
