@@ -15,8 +15,8 @@ const router = createBrowserRouter([
       { index: true, Component: GamesPage },
       { path: 'games/new', Component: NewGamePage },
       { path: 'games/:id', Component: GameDetailPage },
-      { path: '*', Component: NotFoundPage },
       { path: 'games/:id/edit', Component: EditGamePage },
+      { path: '*', Component: NotFoundPage },
     ],
   },
 ])
