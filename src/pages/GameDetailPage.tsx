@@ -44,13 +44,18 @@ const GameDetailPage = () => {
             <dt className="font-semibold">Rating</dt>
             <dd>{game.rating !== null ? `${game.rating}/5` : 'Not rated'}</dd>
           </dl>
-
           {game.notes && (
             <section className="mt-4">
               <h2 className="font-semibold">Notes</h2>
               <p>{game.notes}</p>
             </section>
-          )}
+          )}{' '}
+          <Link
+            to={`/games/${game.id}/edit`}
+            className="mt-6 inline-block rounded bg-black px-4 py-2 text-white"
+          >
+            Edit game
+          </Link>
         </div>
       </div>
     </article>

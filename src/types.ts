@@ -14,6 +14,7 @@ export type Game = {
   updatedAt: string
 }
 export type NewGame = Pick<Game, 'title' | 'platform' | 'status'>
+export type GameUpdate = Partial<Pick<Game, 'status' | 'rating' | 'notes'>>
 
 export const STATUS_LABELS: Record<GameStatus, string> = {
   want: 'Want to play',

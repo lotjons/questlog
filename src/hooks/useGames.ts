@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { API_URL } from '../config'
-import type { Game, NewGame, StatusFilter } from '../types'
+import type { Game, GameUpdate, NewGame, StatusFilter } from '../types'
 
 // All games, or only one status
 export const useGames = (status: StatusFilter) => {
@@ -46,38 +46,6 @@ export const useGames = (status: StatusFilter) => {
   return { games, isLoading, error }
 }
 
-// Create, update and delete games
-export const useSaveGame = () => {
-  const [isSaving, setIsSaving] = useState(false)
-  const [error, setError] = useState('')
-
-  const addGame = async (newGame: NewGame): Promise<Game | null> => {
-    setIsSaving(true)
-    setError('')
-    try {
-      const response = await fetch(`${API_URL}/games`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newGame),
-      })
-      const data = await response.json()
-
-      if (!response.ok) {
-        setError(data.message ?? 'Could not save the game.')
-        return null
-      }
-      return data
-    } catch {
-      setError('Could not reach the server. Check your connection.')
-      return null
-    } finally {
-      setIsSaving(false)
-    }
-  }
-
-  return { addGame, isSaving, error }
-}
-
 // One game by id
 export const useGame = (id: string | undefined) => {
   const [game, setGame] = useState<Game | null>(null)
@@ -117,4 +85,63 @@ export const useGame = (id: string | undefined) => {
   }, [id])
 
   return { game, isLoading, error }
+}
+
+// Create, update and delete games
+export const useSaveGame = () => {
+  const [isSaving, setIsSaving] = useState(false)
+  const [error, setError] = useState('')
+
+  const addGame = async (newGame: NewGame): Promise<Game | null> => {
+    setIsSaving(true)
+    setError('')
+    try {
+      const response = await fetch(`${API_URL}/games`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newGame),
+      })
+      const data = await response.json()
+
+      if (!response.ok) {
+        setError(data.message ?? 'Could not save the game.')
+        return null
+      }
+      return data
+    } catch {
+      setError('Could not reach the server. Check your connection.')
+      return null
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const updateGame = async (
+    id: string,
+    changes: GameUpdate,
+  ): Promise<boolean> => {
+    setIsSaving(true)
+    setError('')
+    try {
+      const response = await fetch(`${API_URL}/games/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(changes),
+      })
+      const data = await response.json()
+
+      if (!response.ok) {
+        setError(data.message ?? 'Could not update the game.')
+        return false
+      }
+      return true
+    } catch {
+      setError('Could not reach the server. Check your connection.')
+      return false
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  return { addGame, updateGame, isSaving, error }
 }

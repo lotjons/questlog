@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
+import EditGamePage from './pages/EditGamePage'
 import GameDetailPage from './pages/GameDetailPage'
 import GamesPage from './pages/GamesPage'
 import NewGamePage from './pages/NewGamePage'
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       { path: 'games/new', Component: NewGamePage },
       { path: 'games/:id', Component: GameDetailPage },
       { path: '*', Component: NotFoundPage },
+      { path: 'games/:id/edit', Component: EditGamePage },
     ],
   },
 ])
