@@ -142,6 +142,25 @@ export const useSaveGame = () => {
       setIsSaving(false)
     }
   }
+  const deleteGame = async (id: string): Promise<boolean> => {
+    setIsSaving(true)
+    setError('')
+    try {
+      const response = await fetch(`${API_URL}/games/${id}`, {
+        method: 'DELETE',
+      })
 
-  return { addGame, updateGame, isSaving, error }
+      if (!response.ok) {
+        setError('Could not delete the game.')
+        return false
+      }
+      return true
+    } catch {
+      setError('Could not reach the server. Check your connection.')
+      return false
+    } finally {
+      setIsSaving(false)
+    }
+  }
+  return { addGame, updateGame, deleteGame, isSaving, error }
 }

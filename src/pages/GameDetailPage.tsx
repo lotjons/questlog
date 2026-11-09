@@ -1,10 +1,12 @@
-import { Link, useParams } from 'react-router'
-import { useGame } from '../hooks/useGames'
+import { Link, useNavigate, useParams } from 'react-router'
+import { useGame, useSaveGame } from '../hooks/useGames'
 import { STATUS_LABELS } from '../types'
 
 const GameDetailPage = () => {
   const { id } = useParams()
+  const navigate = useNavigate()
   const { game, isLoading, error } = useGame(id)
+  const { deleteGame, isSaving, error: deleteError } = useSaveGame()
 
   if (isLoading) return <p role="status">Loading game...</p>
 
@@ -17,6 +19,12 @@ const GameDetailPage = () => {
         </Link>
       </>
     )
+  }
+
+  const handleDelete = async () => {
+    if (!window.confirm(`Delete ${game.title}? This can't be undone.`)) return
+    const ok = await deleteGame(game.id)
+    if (ok) navigate('/')
   }
 
   return (
@@ -44,18 +52,36 @@ const GameDetailPage = () => {
             <dt className="font-semibold">Rating</dt>
             <dd>{game.rating !== null ? `${game.rating}/5` : 'Not rated'}</dd>
           </dl>
+
           {game.notes && (
             <section className="mt-4">
               <h2 className="font-semibold">Notes</h2>
               <p>{game.notes}</p>
             </section>
-          )}{' '}
-          <Link
-            to={`/games/${game.id}/edit`}
-            className="mt-6 inline-block rounded bg-black px-4 py-2 text-white"
-          >
-            Edit game
-          </Link>
+          )}
+
+          {deleteError && (
+            <p role="alert" className="mt-4 text-red-700">
+              {deleteError}
+            </p>
+          )}
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              to={`/games/${game.id}/edit`}
+              className="rounded bg-black px-4 py-2 text-white"
+            >
+              Edit game
+            </Link>
+            <button
+              type="button"
+              onClick={handleDelete}
+              disabled={isSaving}
+              className="rounded border-2 border-red-700 px-4 py-2 text-red-700 disabled:opacity-50"
+            >
+              {isSaving ? 'Deleting...' : 'Delete game'}
+            </button>
+          </div>
         </div>
       </div>
     </article>
