@@ -1,13 +1,15 @@
-import { useState } from 'react'
 import FilterButtons from '../components/FilterButtons'
 import GameList from '../components/GameList'
 import { useGames } from '../hooks/useGames'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 import type { StatusFilter } from '../types'
 
 const GamesPage = () => {
-  const [status, setStatus] = useState<StatusFilter>('all')
+  const [status, setStatus] = useLocalStorage<StatusFilter>(
+    'questlog-status',
+    'all',
+  )
   const { games, isLoading, error } = useGames(status)
-
   return (
     <>
       <h1 className="mb-4 text-3xl font-bold">My games</h1>
