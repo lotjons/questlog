@@ -42,11 +42,7 @@ const GameDetailPage = () => {
 
       <div className="flex flex-col gap-8 sm:flex-row">
         <div className="w-full max-w-64 shrink-0">
-          <GameCover
-            title={game.title}
-            coverUrl={game.coverUrl}
-            alt={`Cover of ${game.title}`}
-          />
+          <GameCover title={game.title} coverUrl={game.coverUrl} />
         </div>
 
         <div className="flex-1">
