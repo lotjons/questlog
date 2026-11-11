@@ -9,11 +9,32 @@ const GamesPage = () => {
     'questlog-status',
     'all',
   )
+  const [isPaused, setIsPaused] = useLocalStorage(
+    'questlog-motion-paused',
+    false,
+  )
   const { games, isLoading, error } = useGames(status)
 
   return (
     <>
-      <h1 className="mb-6 font-display text-5xl">My games</h1>
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <h1
+          className={
+            isPaused
+              ? 'origin-left font-display text-5xl'
+              : 'origin-left animate-breathe font-display text-5xl motion-reduce:animate-none'
+          }
+        >
+          My games
+        </h1>
+        <button
+          type="button"
+          onClick={() => setIsPaused(!isPaused)}
+          className="font-mono text-xs uppercase tracking-wider text-muted underline underline-offset-4 hover:text-fg motion-reduce:hidden"
+        >
+          {isPaused ? 'Play motion' : 'Pause motion'}
+        </button>
+      </div>
 
       <FilterButtons selected={status} onChange={setStatus} />
 
