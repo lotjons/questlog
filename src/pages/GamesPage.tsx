@@ -10,15 +10,26 @@ const GamesPage = () => {
     'all',
   )
   const { games, isLoading, error } = useGames(status)
+
   return (
     <>
-      <h1 className="mb-4 text-3xl font-bold">My games</h1>
+      <h1 className="mb-6 font-display text-5xl">My games</h1>
 
       <FilterButtons selected={status} onChange={setStatus} />
 
-      {isLoading && <p role="status">Loading games...</p>}
-      {error && <p role="alert">{error}</p>}
-      {!isLoading && !error && games.length === 0 && <p>No games here yet.</p>}
+      {isLoading && (
+        <p role="status" className="text-muted">
+          Loading games...
+        </p>
+      )}
+      {error && (
+        <p role="alert" className="text-danger">
+          {error}
+        </p>
+      )}
+      {!isLoading && !error && games.length === 0 && (
+        <p className="text-muted">No games here yet.</p>
+      )}
       {!isLoading && !error && games.length > 0 && <GameList games={games} />}
     </>
   )

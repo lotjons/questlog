@@ -15,8 +15,10 @@ type FilterButtonsProps = {
 
 const FilterButtons = ({ selected, onChange }: FilterButtonsProps) => {
   return (
-    <fieldset className="mb-6">
-      <legend className="mb-2 text-sm font-semibold">Show</legend>
+    <fieldset className="mb-8">
+      <legend className="mb-3 font-mono text-xs uppercase tracking-wider text-muted">
+        Show
+      </legend>
       <div className="flex flex-wrap gap-2">
         {FILTERS.map((filter) => {
           const isActive = filter === selected
@@ -28,11 +30,11 @@ const FilterButtons = ({ selected, onChange }: FilterButtonsProps) => {
               onClick={() => onChange(filter)}
               className={
                 isActive
-                  ? 'rounded-full border bg-black px-4 py-2 text-white'
-                  : 'rounded-full border px-4 py-2 hover:bg-gray-100'
+                  ? 'min-h-11 rounded-full border border-forest-line bg-forest px-4 font-mono text-xs uppercase tracking-wider text-fg'
+                  : 'min-h-11 rounded-full border border-line px-4 font-mono text-xs uppercase tracking-wider text-fg transition-colors hover:border-field'
               }
             >
-              {isActive && '✓ '}
+              {isActive && <span aria-hidden="true">✓ </span>}
               {filter === 'all' ? 'All' : STATUS_LABELS[filter]}
             </button>
           )

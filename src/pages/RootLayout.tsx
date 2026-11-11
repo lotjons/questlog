@@ -2,27 +2,36 @@ import { NavLink, Outlet } from 'react-router'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
   isActive
-    ? 'font-semibold underline underline-offset-4'
-    : 'hover:underline underline-offset-4'
+    ? 'text-fg underline decoration-sage decoration-2 underline-offset-8'
+    : 'text-muted underline-offset-8 hover:text-fg hover:underline'
 
 const RootLayout = () => {
   return (
     <>
-      <header className="flex items-center justify-between gap-4 border-b p-4">
-        <NavLink to="/" className="text-xl font-bold">
-          Questlog
-        </NavLink>
-        <nav className="flex gap-4">
-          <NavLink to="/" end className={linkClass}>
-            All games
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:rounded focus:bg-forest focus:px-4 focus:py-2"
+      >
+        Skip to content
+      </a>
+
+      <header className="border-b border-line">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-baseline justify-between gap-x-6 gap-y-2 px-4 py-5">
+          <NavLink to="/" className="font-display text-3xl">
+            Questlog
           </NavLink>
-          <NavLink to="/games/new" className={linkClass}>
-            Add a game
-          </NavLink>
-        </nav>
+          <nav aria-label="Main" className="flex gap-6 text-sm">
+            <NavLink to="/" end className={linkClass}>
+              All games
+            </NavLink>
+            <NavLink to="/games/new" className={linkClass}>
+              Add a game
+            </NavLink>
+          </nav>
+        </div>
       </header>
 
-      <main className="p-4">
+      <main id="main" className="mx-auto max-w-5xl px-4 py-10">
         <Outlet />
       </main>
     </>
