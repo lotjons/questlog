@@ -1,5 +1,6 @@
 import { type ChangeEvent, type SubmitEvent, useState } from 'react'
 import { type Game, type GameUpdate, STATUS_LABELS } from '../types'
+import { field, label, primaryButton } from '../ui'
 
 type EditGameFormProps = {
   game: Game
@@ -31,9 +32,9 @@ const EditGameForm = ({ game, onSubmit, isSaving }: EditGameFormProps) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex max-w-md flex-col gap-4">
+    <form onSubmit={handleSubmit} className="flex max-w-md flex-col gap-6">
       <div>
-        <label htmlFor="status" className="block font-semibold">
+        <label htmlFor="status" className={label}>
           Status
         </label>
         <select
@@ -41,18 +42,18 @@ const EditGameForm = ({ game, onSubmit, isSaving }: EditGameFormProps) => {
           name="status"
           value={form.status}
           onChange={handleChange}
-          className="w-full rounded border border-gray-500 bg-white p-2"
+          className={field}
         >
-          {Object.entries(STATUS_LABELS).map(([value, label]) => (
+          {Object.entries(STATUS_LABELS).map(([value, text]) => (
             <option key={value} value={value}>
-              {label}
+              {text}
             </option>
           ))}
         </select>
       </div>
 
       <div>
-        <label htmlFor="rating" className="block font-semibold">
+        <label htmlFor="rating" className={label}>
           Rating
         </label>
         <select
@@ -60,7 +61,7 @@ const EditGameForm = ({ game, onSubmit, isSaving }: EditGameFormProps) => {
           name="rating"
           value={form.rating}
           onChange={handleChange}
-          className="w-full rounded border border-gray-500 bg-white p-2"
+          className={field}
         >
           <option value="">Not rated</option>
           {[1, 2, 3, 4, 5].map((number) => (
@@ -72,7 +73,7 @@ const EditGameForm = ({ game, onSubmit, isSaving }: EditGameFormProps) => {
       </div>
 
       <div>
-        <label htmlFor="notes" className="block font-semibold">
+        <label htmlFor="notes" className={label}>
           Notes
         </label>
         <textarea
@@ -81,17 +82,15 @@ const EditGameForm = ({ game, onSubmit, isSaving }: EditGameFormProps) => {
           rows={4}
           value={form.notes}
           onChange={handleChange}
-          className="w-full rounded border border-gray-500 bg-white p-2"
+          className={field}
         />
       </div>
 
-      <button
-        type="submit"
-        disabled={isSaving}
-        className="self-start rounded bg-black px-4 py-2 text-white disabled:opacity-50"
-      >
-        {isSaving ? 'Saving...' : 'Save changes'}
-      </button>
+      <div>
+        <button type="submit" disabled={isSaving} className={primaryButton}>
+          {isSaving ? 'Saving...' : 'Save changes'}
+        </button>
+      </div>
     </form>
   )
 }

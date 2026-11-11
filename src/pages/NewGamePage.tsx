@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router'
 import NewGameForm from '../components/NewGameForm'
 import { useSaveGame } from '../hooks/useGames'
 import type { NewGame } from '../types'
+import { alert, pageTitle } from '../ui'
 
 const NewGamePage = () => {
   const navigate = useNavigate()
@@ -14,9 +15,9 @@ const NewGamePage = () => {
 
   return (
     <>
-      <h1 className="mb-4 text-3xl font-bold">Add a game</h1>
+      <h1 className={pageTitle}>Add a game</h1>
       {error && (
-        <p role="alert" className="mb-4 text-red-700">
+        <p role="alert" className={alert}>
           {error}
         </p>
       )}

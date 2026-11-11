@@ -1,5 +1,6 @@
 import { type ChangeEvent, type SubmitEvent, useState } from 'react'
 import { type NewGame, STATUS_LABELS } from '../types'
+import { field, fieldError, fieldInvalid, label, primaryButton } from '../ui'
 
 type FormErrors = Partial<Record<'title' | 'platform', string>>
 
@@ -49,10 +50,10 @@ const NewGameForm = ({ onSubmit, isSaving }: NewGameFormProps) => {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="flex max-w-md flex-col gap-4"
+      className="flex max-w-md flex-col gap-6"
     >
       <div>
-        <label htmlFor="title" className="block font-semibold">
+        <label htmlFor="title" className={label}>
           Title
         </label>
         <input
@@ -63,21 +64,18 @@ const NewGameForm = ({ onSubmit, isSaving }: NewGameFormProps) => {
           onChange={handleChange}
           aria-invalid={Boolean(errors.title)}
           aria-describedby={errors.title ? 'title-error' : undefined}
-          className={
-            errors.platform
-              ? 'w-full rounded border-2 border-red-700 bg-white p-2'
-              : 'w-full rounded border border-gray-500 bg-white p-2'
-          }
+          className={errors.title ? fieldInvalid : field}
         />
         {errors.title && (
-          <p id="title-error" className="mt-1 text-red-700">
-            ⚠ {errors.title}
+          <p id="title-error" className={fieldError}>
+            <span aria-hidden="true">⚠ </span>
+            {errors.title}
           </p>
         )}
       </div>
 
       <div>
-        <label htmlFor="platform" className="block font-semibold">
+        <label htmlFor="platform" className={label}>
           Platform
         </label>
         <input
@@ -88,21 +86,18 @@ const NewGameForm = ({ onSubmit, isSaving }: NewGameFormProps) => {
           onChange={handleChange}
           aria-invalid={Boolean(errors.platform)}
           aria-describedby={errors.platform ? 'platform-error' : undefined}
-          className={
-            errors.platform
-              ? 'w-full rounded border-2 border-red-700 bg-white p-2'
-              : 'w-full rounded border border-gray-500 bg-white p-2'
-          }
+          className={errors.platform ? fieldInvalid : field}
         />
         {errors.platform && (
-          <p id="platform-error" className="mt-1 text-red-700">
-            ⚠ {errors.platform}
+          <p id="platform-error" className={fieldError}>
+            <span aria-hidden="true">⚠ </span>
+            {errors.platform}
           </p>
         )}
       </div>
 
       <div>
-        <label htmlFor="status" className="block font-semibold">
+        <label htmlFor="status" className={label}>
           Status
         </label>
         <select
@@ -110,23 +105,21 @@ const NewGameForm = ({ onSubmit, isSaving }: NewGameFormProps) => {
           name="status"
           value={form.status}
           onChange={handleChange}
-          className="w-full rounded border border-gray-500 bg-white p-2"
+          className={field}
         >
-          {Object.entries(STATUS_LABELS).map(([value, label]) => (
+          {Object.entries(STATUS_LABELS).map(([value, text]) => (
             <option key={value} value={value}>
-              {label}
+              {text}
             </option>
           ))}
         </select>
       </div>
 
-      <button
-        type="submit"
-        disabled={isSaving}
-        className="self-start rounded bg-black px-4 py-2 text-white disabled:opacity-50"
-      >
-        {isSaving ? 'Saving...' : 'Add game'}
-      </button>
+      <div>
+        <button type="submit" disabled={isSaving} className={primaryButton}>
+          {isSaving ? 'Saving...' : 'Add game'}
+        </button>
+      </div>
     </form>
   )
 }
