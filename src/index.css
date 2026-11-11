@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+@theme {
+  --color-page: #0f1210;
+  --color-surface: #181d1a;
+  --color-line: #2b322d;
+  --color-field: #7d877f;
+  --color-fg: #eef0e8;
+  --color-muted: #a2aa9e;
+  --color-forest: #2f5d45;
+  --color-forest-dark: #24493a;
+  --color-forest-line: #3c7a58;
+  --color-sage: #a8d5b5;
+  --color-danger: #f28b82;
+
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-page font-sans text-fg antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-sage;
+  }
+
+  ::selection {
+    @apply bg-forest text-fg;
+  }
+}
