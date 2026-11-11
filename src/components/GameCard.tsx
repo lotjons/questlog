@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 import { type Game, STATUS_LABELS } from '../types'
-import GameCover from './GameCover'
+import TitleCover from './TitleCover'
 
 type GameCardProps = {
   game: Game
@@ -12,7 +12,7 @@ const GameCard = ({ game }: GameCardProps) => {
       to={`/games/${game.id}`}
       className="group block h-full rounded-md border border-line bg-surface p-2 transition-colors hover:border-field"
     >
-      <GameCover title={game.title} coverUrl={game.coverUrl} alt="" />
+      <TitleCover title={game.title} />
       <div className="px-1 pt-3 pb-1">
         <h2 className="font-semibold leading-snug underline-offset-4 group-hover:underline">
           {game.title}
