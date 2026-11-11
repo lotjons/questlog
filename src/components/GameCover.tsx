@@ -7,11 +7,13 @@ type GameCoverProps = {
 const GameCover = ({ title, coverUrl, alt }: GameCoverProps) => {
   if (coverUrl) {
     return (
-      <img
-        src={coverUrl}
-        alt={alt}
-        className="aspect-3/4 w-full rounded object-cover"
-      />
+      <div className="aspect-3/4 w-full overflow-hidden rounded bg-forest-deep">
+        <img
+          src={coverUrl}
+          alt={alt}
+          className="size-full object-cover mix-blend-screen brightness-90 contrast-130 grayscale"
+        />
+      </div>
     )
   }
 
